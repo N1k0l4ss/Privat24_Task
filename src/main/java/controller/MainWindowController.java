@@ -67,7 +67,7 @@ public class MainWindowController {
                     roleTable.setItems(FXCollections.observableArrayList(newV.getRoles()));
                     employeeTable.setItems(FXCollections.observableArrayList(newV.getEmployees()));
                 }
-        ); // todo Add time column to department and employee
+        ); // todo Add time column to employee
     }
 
     public void newCompanyClicked() {
@@ -117,8 +117,9 @@ public class MainWindowController {
         if (department == null) return;
 
         Department editedDepartment = getEditedDepartment(department);
-
+        if (editedDepartment == null) return;
         DepartmentService.updateDepartment(editedDepartment);
+        System.out.println("It\'s calling");
         updateTables();
     }
 

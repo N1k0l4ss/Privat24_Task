@@ -22,7 +22,6 @@ public class DepartmentService {
     }
 
     public static void updateDepartment(Department department){
-        if (department == null) return;
         EntityManager em = SingleTone.getSingleTone().getEm();
         em.getTransaction().begin();
         department.setTitle("Edited");
