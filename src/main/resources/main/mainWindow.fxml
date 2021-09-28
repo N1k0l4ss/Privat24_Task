@@ -22,7 +22,7 @@
                       <TableColumn fx:id="departmentTitle" prefWidth="123.0" text="Title" />
                       <TableColumn fx:id="departmentFreeWork" minWidth="0.0" prefWidth="89.0" text="Free Graphic" />
                         <TableColumn fx:id="departmentWorkTime" prefWidth="97.0" text="Work time" />
-                        <TableColumn fx:id="departmentWorkMode" prefWidth="140.0" text="Work Mode" />
+                        <TableColumn fx:id="departmentWorkMode" prefWidth="139.0" text="Work Mode" />
                     </columns>
                   </TableView>
                </center>
