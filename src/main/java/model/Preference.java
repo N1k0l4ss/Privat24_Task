@@ -1,12 +1,12 @@
 package model;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Preference.findAll", query = "select p from Preference p")
 })
+@Cacheable(false)
 public class Preference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

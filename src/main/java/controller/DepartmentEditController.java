@@ -15,6 +15,7 @@ import java.util.List;
 
 
 public class DepartmentEditController {
+    @FXML private ToggleGroup freeWorkToggleGroup;
     @FXML private RadioButton radioTrue;
     @FXML private RadioButton radioFalse;
     @FXML private TextField titleField;
@@ -25,13 +26,34 @@ public class DepartmentEditController {
     private Department editedDepartment;
     private List<Company> companies;
     private List workModes;
+    private int departmentId;
 
     public void initialize(){
-        workModes = SingleTone.getSingleTone().getEm().createQuery("Select p from Preference p").getResultList();
+        workModes = SingleTone.getSingleTone().getEm().createQuery("Select p from Preference p").getResultList(); // Get available preferences
+        // Set spinner limits
         SpinnerValueFactory<Integer> minutesValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
         SpinnerValueFactory<Integer> hoursValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 14);
         minutesSpinner.setValueFactory(minutesValueFactory);
         hourSpinner.setValueFactory(hoursValueFactory);
+        // Disable time fields by selected work mode
+        workModeBox.getSelectionModel().selectedItemProperty().addListener(x -> {
+            Preference workMode = (Preference) workModeBox.getSelectionModel().getSelectedItem();
+            hourSpinner.setDisable(false);
+            minutesSpinner.setDisable(false);
+            hourSpinner.getValueFactory().setValue(9);
+            minutesSpinner.getValueFactory().setValue(0);
+            if (workMode.getId() != 1) {
+                hourSpinner.setDisable(true);
+                minutesSpinner.setDisable(true);
+            }
+        });
+        //
+        freeWorkToggleGroup.selectedToggleProperty().addListener(x-> {
+            if (radioTrue.isSelected())
+                workModeBox.setDisable(true);
+            else
+                workModeBox.setDisable(false);
+        });
     }
 
     public void init(List<Company> companies){
@@ -59,27 +81,38 @@ public class DepartmentEditController {
         //
         companyBox.setValue(department.getCompany());
         workModeBox.setValue(department.getWorkMode());
+        departmentId = department.getId();
     }
 
     public Department getEditedDepartment() {
-        return null;
+        return editedDepartment;
     }
 
-    public void okClicked() { //todo Work here
-        if (!radioFalse.isSelected() && !radioTrue.isSelected())
-            return;
+    public void okClicked() {
         if (titleField.getText().isEmpty()
-                || workModeBox.getSelectionModel().getSelectedItem() == null
-                || companyBox.getSelectionModel().getSelectedItem() == null) // todo add hour checker
+                || (workModeBox.getSelectionModel().getSelectedItem() == null && !workModeBox.isDisable())
+                || companyBox.getSelectionModel().getSelectedItem() == null
+                || (!radioFalse.isSelected() && !radioTrue.isSelected()))
+            return;
         editedDepartment = new Department();
-        if (radioTrue.isSelected())
-            editedDepartment.setFreeWork(true);
-        else // todo watch problem here
-            editedDepartment.setFreeWork(false);
+        editedDepartment.setFreeWork(radioTrue.isSelected());
         editedDepartment.setTitle(titleField.getText());
-        editedDepartment.setWorkMode((Preference) workModeBox.getSelectionModel().getSelectedItem());
+        // if graphic is free set null
+        if (radioTrue.isSelected())
+            editedDepartment.setWorkMode(null);
+        else
+            editedDepartment.setWorkMode((Preference) workModeBox.getSelectionModel().getSelectedItem());
+        //
         editedDepartment.setCompany((Company) companyBox.getSelectionModel().getSelectedItem());
-        editedDepartment.setStartTime(LocalTime.of((int)hourSpinner.getValue(), (int)minutesSpinner.getValue()));
+        // Set time by work mode
+        Preference workMode = (Preference) workModeBox.getSelectionModel().getSelectedItem();
+        if (radioTrue.isSelected() || workMode.getId() == 3)
+            editedDepartment.setStartTime(null);
+        else
+            editedDepartment.setStartTime(LocalTime.of((int)hourSpinner.getValue(), (int)minutesSpinner.getValue()));
+        // Set id only if we wanna edit object that already exists
+        if (!companies.isEmpty())
+            editedDepartment.setId(departmentId);
         closeStage();
     }
 

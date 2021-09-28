@@ -8,6 +8,7 @@ import java.util.Collection;
 @NamedQueries({
         @NamedQuery(name = "Department.findAll", query = "select d from Department d")
 })
+@Cacheable(false)
 public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -82,10 +83,12 @@ public class Department {
     }
 
     public String getPreferenceName(){
+        if (workMode == null)
+            return "";
         return workMode.getPreferenceName();
     }
 
     public String getWorkTimeString() {
-        if (startTime == null) return "NULL";
+        if (startTime == null) return "";
         return startTime.toString(); }
 }

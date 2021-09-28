@@ -1,7 +1,5 @@
 package model;
 
-import org.eclipse.persistence.annotations.ReturnUpdate;
-
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -9,7 +7,7 @@ import java.util.Collection;
 @NamedQueries({
         @NamedQuery(name = "Company.findAll", query = "select c from Company c")
 })
-
+@Cacheable(false)
 public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

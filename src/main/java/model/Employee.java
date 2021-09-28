@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-
+@Cacheable(false)
 public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -18,10 +18,10 @@
             <Font size="14.0" />
          </font>
          <toggleGroup>
-            <ToggleGroup fx:id="freeWork" />
+            <ToggleGroup fx:id="freeWorkToggleGroup"/>
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="radioFalse" layoutX="74.0" layoutY="51.0" mnemonicParsing="false" text="false" toggleGroup="$freeWork">
+      <RadioButton fx:id="radioFalse" layoutX="74.0" layoutY="51.0" mnemonicParsing="false" text="false" toggleGroup="$freeWorkToggleGroup">
          <font>
             <Font size="14.0" />
          </font>

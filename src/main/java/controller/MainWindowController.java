@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
@@ -15,8 +14,6 @@ import service.CompanyService;
 import service.DepartmentService;
 import singleTone.SingleTone;
 
-import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -56,7 +53,6 @@ public class MainWindowController {
         roleTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         roleFreeWork.setCellValueFactory(new PropertyValueFactory<>("freeWork"));
         // Get company
-//        companyListView.setItems(FXCollections.observableArrayList(CompanyService.findAll()));
         updateTables();
         //
         companyListView.getSelectionModel().selectedItemProperty().addListener(
@@ -90,6 +86,7 @@ public class MainWindowController {
         companyListView.getItems().clear();
         employeeTable.getItems().clear();
         departmentTable.getItems().clear();
+
         companyListView.setItems(FXCollections.observableArrayList(CompanyService.findAll()));
         companyListView.getSelectionModel().select(selectedIndex);
     }
@@ -110,20 +107,21 @@ public class MainWindowController {
     }
 
     public void newDepartmentClicked() {
-    }
-// todo here
-    public void editDepartmentClicked() {
-        Department department = departmentTable.getSelectionModel().getSelectedItem();
-        if (department == null) return;
-
-        Department editedDepartment = getEditedDepartment(department);
+        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
+        Department editedDepartment = getEditedDepartment(null);
         if (editedDepartment == null) return;
-        DepartmentService.updateDepartment(editedDepartment);
-        System.out.println("It\'s calling");
+        DepartmentService.createDepartment(editedDepartment);
         updateTables();
     }
 
-
+    public void editDepartmentClicked() {
+        Department department = departmentTable.getSelectionModel().getSelectedItem();
+        if (department == null) return;
+        Department editedDepartment = getEditedDepartment(department);
+        if (editedDepartment == null) return;
+        DepartmentService.updateDepartment(editedDepartment);
+        updateTables();
+    }
 
     public void deleteDepartmentClicked() {
         Department department = departmentTable.getSelectionModel().getSelectedItem();

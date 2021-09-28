@@ -8,7 +8,9 @@ import java.util.List;
 
 public class CompanyService {
     public static List<Company> findAll(){
-        return SingleTone.getSingleTone().getEm().createNamedQuery("Company.findAll", Company.class).getResultList();
+        EntityManager em = SingleTone.getSingleTone().getEm();
+        em.clear();
+        return em.createNamedQuery("Company.findAll", Company.class).getResultList();
     }
 
     public static void createCompany(Company company){

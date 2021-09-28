@@ -7,6 +7,7 @@ import java.util.Collection;
 @NamedQueries({
         @NamedQuery(name = "Role.findAll", query = "select r from Role r")
 })
+@Cacheable(false)
 public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
