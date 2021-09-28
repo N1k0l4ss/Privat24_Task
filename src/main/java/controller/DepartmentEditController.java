@@ -3,14 +3,11 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import model.Company;
 import model.Department;
 import singleTone.SingleTone;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +53,6 @@ public class DepartmentEditController {
                 minutesSpinner.getValueFactory().setValue(0);
         }
         //
-
 
     }
 
