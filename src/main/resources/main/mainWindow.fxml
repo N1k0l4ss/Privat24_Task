@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
+   <tabs>
+      <Tab closable="false" text="Company">
+         <content>
+            <BorderPane>
+               <center>
+                  <TableView fx:id="departmentTable" prefHeight="506.0" prefWidth="465.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="departmentTitle" prefWidth="105.0" text="Title" />
+                      <TableColumn fx:id="departmentFreeWork" minWidth="0.0" prefWidth="107.0" text="Free Graphic" />
+                        <TableColumn fx:id="departmentWorkTime" prefWidth="97.0" text="Work time" />
+                        <TableColumn fx:id="departmentWorkMode" prefWidth="140.0" text="Work Mode" />
+                    </columns>
+                  </TableView>
+               </center>
+               <right>
+                  <TableView fx:id="roleTable" prefHeight="506.0" prefWidth="340.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="roleTitle" prefWidth="240.0" text="Title" />
+                      <TableColumn fx:id="roleFreeWork" prefWidth="98.0" text="Free Graphic" />
+                    </columns>
+                  </TableView>
+               </right>
+               <top>
+                  <AnchorPane prefHeight="0.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label layoutX="211.0" text="Departments">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="660.0" text="Roles">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="5.0" text="Company">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <ListView fx:id="companyListView" prefHeight="551.0" prefWidth="210.0" BorderPane.alignment="CENTER" />
+               </left>
+                <bottom>
+                    <AnchorPane prefHeight="45.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+                        <children>
+                            <Button layoutX="926.0" layoutY="10.0" mnemonicParsing="false" text="New role" />
+                            <Button layoutX="772.0" layoutY="10.0" mnemonicParsing="false" text="Delete role" />
+                            <Button layoutX="856.0" layoutY="10.0" mnemonicParsing="false" text="Edit role" />
+                        <Button layoutX="123.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#newCompanyClicked" text="New company" />
+                        <Button layoutX="554.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#newDepartmentClicked" text="New department" />
+                        <Button layoutX="442.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#editDepartmentClicked" text="Edit department" />
+                        <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#deleteDepartmentClicked" text="Delete department" />
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#deleteCompanyClicked" text="Delete company" />
+                        </children>
+                    </AnchorPane>
+                </bottom>
+            </BorderPane>
+         </content>
+      </Tab>
+      <Tab closable="false" text="Employee">
+        <content>
+            <BorderPane>
+               <center>
+                  <TableView fx:id="employeeTable" prefHeight="200.0" prefWidth="380.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="employeeName" prefWidth="311.0" text="Name" />
+                      <TableColumn fx:id="employeePreference" minWidth="4.0" prefWidth="198.0" text="Preference" />
+                        <TableColumn fx:id="employeeDepartment" prefWidth="308.0" text="Department" />
+                        <TableColumn fx:id="employeeRole" prefWidth="181.0" text="Role" />
+                    </columns>
+                  </TableView>
+               </center>
+               <bottom>
+               </bottom>
+               <bottom>
+                  <AnchorPane prefHeight="45.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button layoutX="890.0" layoutY="10.0" mnemonicParsing="false" text="New employee" />
+                        <Button layoutX="672.0" layoutY="10.0" mnemonicParsing="false" text="Delete employee" />
+                        <Button layoutX="788.0" layoutY="10.0" mnemonicParsing="false" text="Edit employee" />
+                     </children>
+                  </AnchorPane>
+               </bottom>
+            </BorderPane>
+        </content>
+      </Tab>
+   </tabs>
+</TabPane>
