@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
@@ -165,5 +167,10 @@ public class MainWindowController {
         alert.setHeaderText(null);
         alert.setContentText(error);
         alert.showAndWait();
+    }
+
+    public void onKeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.F5)
+            updateTables();
     }
 }
