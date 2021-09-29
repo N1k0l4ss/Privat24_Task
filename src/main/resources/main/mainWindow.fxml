@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane onKeyPressed="#onKeyPressed" prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
+<TabPane onKeyPressed="#onKeyPressed" prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindowController">
    <tabs>
       <Tab closable="false" text="Company">
          <content>
@@ -94,9 +94,9 @@
                <bottom>
                   <AnchorPane prefHeight="45.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button layoutX="890.0" layoutY="10.0" mnemonicParsing="false" text="New employee" />
-                        <Button layoutX="672.0" layoutY="10.0" mnemonicParsing="false" text="Delete employee" />
-                        <Button layoutX="788.0" layoutY="10.0" mnemonicParsing="false" text="Edit employee" />
+                        <Button layoutX="890.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#newEmployeeClicked" text="New employee" />
+                        <Button layoutX="672.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#deleteEmployeeClicked" text="Delete employee" />
+                        <Button layoutX="788.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#editEmployeeClicked" text="Edit employee" />
                      </children>
                   </AnchorPane>
                </bottom>

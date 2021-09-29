@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import model.*;
 import service.CompanyService;
 import service.DepartmentService;
+import service.EmployeeService;
 import service.RoleService;
 import singleTone.SingleTone;
 
@@ -179,8 +180,62 @@ public class MainWindowController {
         return editedDepartment;
     }
 
+    // Employee controls
+    public void newEmployeeClicked() {
+        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
+        Employee editedEmployee = getEditedEmployee(null);
+        if (editedEmployee == null) return;
+        EmployeeService.createEmployee(editedEmployee);
+        updateTables();
+    }
+
+    public void editEmployeeClicked() {
+        Employee employee = employeeTable.getSelectionModel().getSelectedItem();
+        if (employee == null) return;
+        Employee editedEmployee = getEditedEmployee(employee);
+        if (editedEmployee == null) return;
+        EmployeeService.updateEmployee(editedEmployee);
+        updateTables();
+    }
+
+    public void deleteEmployeeClicked() {
+        Employee employee = employeeTable.getSelectionModel().getSelectedItem();
+        if (employee != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete employee");
+            alert.setHeaderText("Do you really want to delete employee?");
+            alert.setContentText(employee.getName());
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                EmployeeService.deleteEmployee(employee);
+                updateTables();
+            }
+        }
+    }
+
+    private Employee getEditedEmployee(Employee employee) { // todo find nullptr
+        Employee editedEmployee = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/employeeEdit.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Employee");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root1));
+            EmployeeEditController controller = fxmlLoader.getController();
+            controller.init(companyListView.getItems());
+            controller.sendEmployee(employee);
+            stage.setResizable(false);
+            stage.showAndWait();
+            editedEmployee = controller.getEditedEmployee();
+        } catch (Exception e) {
+            displayError(e.toString());
+        }
+        return editedEmployee;
+    }
+
     // Role controls
-    public void newRoleClicked() {
+    public void newRoleClicked() { // todo role crud
     }
 
     public void editRoleClicked() {
@@ -199,26 +254,5 @@ public class MainWindowController {
                 updateTables();
             }
         }
-    }
-
-    private Employee getEditedEmployee(Employee employee) {
-        Employee editedEmplayee = null;
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/employeeEdit.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Employee");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root1));
-            EmployeeEditController controller = fxmlLoader.getController();
-            controller.init(companyListView.getItems());
-            controller.sendEmployee(employee);
-            stage.setResizable(false);
-            stage.showAndWait();
-            editedEmplayee = controller.getEditedEmployee();
-        } catch (Exception e) {
-            displayError(e.toString());
-        }
-        return editedEmplayee;
     }
 }
