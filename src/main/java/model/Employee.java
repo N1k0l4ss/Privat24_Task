@@ -89,4 +89,6 @@ public class Employee {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    public String getTimeString() { if (startTime == null) return ""; return startTime.toString(); }
 }

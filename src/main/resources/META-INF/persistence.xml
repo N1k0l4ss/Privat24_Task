@@ -11,7 +11,7 @@
     <class>model.Employee</class>
     <class>model.Preference</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Company"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://77.247.27.249:3306/Company"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="default"/>
       <property name="javax.persistence.jdbc.password" value="default"/>

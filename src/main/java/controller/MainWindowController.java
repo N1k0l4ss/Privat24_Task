@@ -18,13 +18,13 @@ import singleTone.SingleTone;
 
 import java.util.Optional;
 
-
 public class MainWindowController {
     // Employee table
     @FXML private TableView<Employee> employeeTable;
     @FXML private TableColumn<Employee, String> employeeName;
     @FXML private TableColumn<Employee, String> employeePreference;
     @FXML private TableColumn<Employee, String> employeeDepartment;
+    @FXML private TableColumn<Employee, String> employeeTime;
     @FXML private TableColumn<Employee, String> employeeRole;
     // Role table
     @FXML private TableView<Role> roleTable;
@@ -36,15 +36,17 @@ public class MainWindowController {
     @FXML private TableColumn<Department, String> departmentWorkTime;
     @FXML private TableColumn<Department, Boolean> departmentFreeWork;
     @FXML private TableColumn<Department, String> departmentWorkMode;
-    @FXML
-    private ListView<Company> companyListView;
+    @FXML private ListView<Company> companyListView;
+    // Other variables
     private SingleTone singleTone;
+    // Window controls
     public void initialize(){
         singleTone = SingleTone.getSingleTone();
         // Employee settings
         employeeName.setCellValueFactory(new PropertyValueFactory<>("name"));
         employeePreference.setCellValueFactory(new PropertyValueFactory<>("preferenceString"));
         employeeDepartment.setCellValueFactory(new PropertyValueFactory<>("departmentString"));
+        employeeTime.setCellValueFactory(new PropertyValueFactory<>("timeString"));
         employeeRole.setCellValueFactory(new PropertyValueFactory<>("roleString"));
         // Department settings
         departmentTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -65,9 +67,33 @@ public class MainWindowController {
                     roleTable.setItems(FXCollections.observableArrayList(newV.getRoles()));
                     employeeTable.setItems(FXCollections.observableArrayList(newV.getEmployees()));
                 }
-        ); // todo Add time column to employee
+        );
     }
 
+    private void updateTables() {
+        int selectedIndex = companyListView.getSelectionModel().getSelectedIndex();
+        roleTable.getItems().clear();
+        companyListView.getItems().clear();
+        employeeTable.getItems().clear();
+        departmentTable.getItems().clear();
+        companyListView.setItems(FXCollections.observableArrayList(CompanyService.findAll()));
+        companyListView.getSelectionModel().select(selectedIndex);
+    }
+
+    public void displayError(String error){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error!");
+        alert.setHeaderText(null);
+        alert.setContentText(error);
+        alert.showAndWait();
+    }
+
+    public void onKeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.F5)
+            updateTables();
+    }
+
+    // Company controls
     public void newCompanyClicked() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Create a company");
@@ -80,17 +106,6 @@ public class MainWindowController {
             CompanyService.createCompany(company);
             updateTables();
         }
-    }
-
-    private void updateTables() {
-        int selectedIndex = companyListView.getSelectionModel().getSelectedIndex();
-        roleTable.getItems().clear();
-        companyListView.getItems().clear();
-        employeeTable.getItems().clear();
-        departmentTable.getItems().clear();
-
-        companyListView.setItems(FXCollections.observableArrayList(CompanyService.findAll()));
-        companyListView.getSelectionModel().select(selectedIndex);
     }
 
     public void deleteCompanyClicked() {
@@ -108,6 +123,7 @@ public class MainWindowController {
         }
     }
 
+    // Department controls
     public void newDepartmentClicked() {
         if (companyListView.getSelectionModel().getSelectedItem() == null) return;
         Department editedDepartment = getEditedDepartment(null);
@@ -161,16 +177,5 @@ public class MainWindowController {
         return editedDepartment;
     }
 
-    public void displayError(String error){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error!");
-        alert.setHeaderText(null);
-        alert.setContentText(error);
-        alert.showAndWait();
-    }
 
-    public void onKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.F5)
-            updateTables();
-    }
 }

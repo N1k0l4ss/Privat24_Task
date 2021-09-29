@@ -16,7 +16,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
         primaryStage.setTitle("Privat24 test task by Nikita Bielonozhko");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.setResizable(false);
         primaryStage.show();
     }

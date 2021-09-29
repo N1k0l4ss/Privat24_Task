@@ -47,12 +47,17 @@ public class DepartmentEditController {
                 minutesSpinner.setDisable(true);
             }
         });
-        //
+        // Disable field, that doesnt belong to free graphic
         freeWorkToggleGroup.selectedToggleProperty().addListener(x-> {
-            if (radioTrue.isSelected())
+            if (radioTrue.isSelected()) {
                 workModeBox.setDisable(true);
-            else
+                minutesSpinner.setDisable(true);
+                hourSpinner.setDisable(true);
+            } else{
                 workModeBox.setDisable(false);
+                minutesSpinner.setDisable(false);
+                hourSpinner.setDisable(false);
+            }
         });
     }
 
@@ -62,9 +67,11 @@ public class DepartmentEditController {
         workModeBox.setItems(FXCollections.observableArrayList(workModes));
     }
 
+    // Receives department, if we wanna edit it
     public void sendDepartment(Department department) {
         if (department == null) return;
         //
+        companyBox.setDisable(true);
         if (department.isFreeWork())
             radioTrue.setSelected(true);
         else
@@ -84,10 +91,8 @@ public class DepartmentEditController {
         departmentId = department.getId();
     }
 
-    public Department getEditedDepartment() {
-        return editedDepartment;
-    }
 
+    // Initialize edited department, doesnt matters if we create new department or edited old
     public void okClicked() {
         if (titleField.getText().isEmpty()
                 || (workModeBox.getSelectionModel().getSelectedItem() == null && !workModeBox.isDisable())
@@ -123,5 +128,10 @@ public class DepartmentEditController {
     private void closeStage(){
         Stage stage = (Stage) hourSpinner.getScene().getWindow();
         stage.close();
+    }
+
+    // Getter for edited or created department
+    public Department getEditedDepartment() {
+        return editedDepartment;
     }
 }
