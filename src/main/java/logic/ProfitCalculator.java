@@ -56,8 +56,6 @@ public class ProfitCalculator
         double minutesOffset;
         double profitHour;
         double res = 0;
-
-
         // Receive time offset
         if (employeeStartTime != null){
             if (departmentWorkMode == null || employeeStartTime.equals(departmentStartTime))
@@ -66,11 +64,10 @@ public class ProfitCalculator
                 minutesOffset = getMinutesOffset(departmentStartTime, employeeStartTime);
             profitHour = employeePreference.getCoefficient() * (minutesOffset / 60);
         } else profitHour = 8 * employeePreference.getCoefficient();
-
+        // Defines if this profit is positive or negative
         if ((departmentStartTime != null && !employeeStartTime.equals(departmentStartTime)) || !employeeRole.isFreeWork())
             res -= profitHour;
         else res += profitHour;
-
     return res;
 }
 
