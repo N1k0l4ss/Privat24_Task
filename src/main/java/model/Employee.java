@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 @Cacheable(false)
@@ -91,4 +92,17 @@ public class Employee {
     }
 
     public String getTimeString() { if (startTime == null) return ""; return startTime.toString(); }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id && Objects.equals(preference, employee.preference) && Objects.equals(name, employee.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, preference, name);
+    }
 }

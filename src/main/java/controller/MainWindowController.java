@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import logic.ProfitCalculator;
 import model.*;
 import service.CompanyService;
 import service.DepartmentService;
@@ -92,8 +93,14 @@ public class MainWindowController {
     }
 
     public void onKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.F5)
-            updateTables();
+        switch (keyEvent.getCode()){
+            case F5:
+                updateTables();
+                break;
+            case F4:
+                new ProfitCalculator(companyListView.getSelectionModel().getSelectedItem());
+                break;
+        }
     }
 
     // Company controls
