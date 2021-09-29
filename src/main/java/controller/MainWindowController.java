@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
@@ -99,7 +99,7 @@ public class MainWindowController {
     // Company controls
     public void newCompanyClicked() {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Create a company");
+        dialog.setTitle("Сompany");
         dialog.setHeaderText("Please enter your company name:");
         dialog.setContentText(null);
         Optional<String> result = dialog.showAndWait();
@@ -128,7 +128,6 @@ public class MainWindowController {
 
     // Department controls
     public void newDepartmentClicked() {
-        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
         Department editedDepartment = getEditedDepartment(null);
         if (editedDepartment == null) return;
         DepartmentService.createDepartment(editedDepartment);
@@ -180,9 +179,78 @@ public class MainWindowController {
         return editedDepartment;
     }
 
+    // Role controls
+    public void newRoleClicked() {
+        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
+        TextField newRoleField = new TextField();
+        CheckBox freeGraphicCheckBox = new CheckBox();
+        boolean okPressed = editRoleDialog(newRoleField, freeGraphicCheckBox);
+        if (okPressed) {
+            Role role = new Role();
+            role.setTitle(newRoleField.getText());
+            role.setFreeWork(freeGraphicCheckBox.isSelected());
+            role.setCompany(companyListView.getSelectionModel().getSelectedItem());
+            RoleService.createRole(role);
+            updateTables();
+        }
+    }
+    // Returns true if pressed ok button
+    private boolean editRoleDialog(TextField newRoleField, CheckBox freeGraphicCheckBox) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        newRoleField.setPromptText("Enter role name");
+        freeGraphicCheckBox.setText("Free graphic");
+        Separator separator = new Separator();
+        separator.setVisible(false);
+        GridPane expContent = new GridPane();
+        expContent.add(newRoleField, 0, 0);
+        expContent.add(separator, 1, 0);
+        expContent.add(freeGraphicCheckBox, 2, 0);
+        alert.getDialogPane().setContent(expContent);
+        alert.setHeaderText("Role information");
+        alert.setTitle("Role");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        }
+        return false;
+    }
+
+    public void editRoleClicked() {
+        Role selectedRole = roleTable.getSelectionModel().getSelectedItem();
+        if (selectedRole == null) return;
+        // Init field
+        TextField newRoleField = new TextField(selectedRole.getTitle());
+        CheckBox freeGraphicCheckBox = new CheckBox();
+        freeGraphicCheckBox.setSelected(selectedRole.isFreeWork());
+        boolean okPressed = editRoleDialog(newRoleField, freeGraphicCheckBox);
+        if (okPressed) {
+            Role editedRole = new Role();
+            editedRole.setId(selectedRole.getId());
+            editedRole.setTitle(newRoleField.getText());
+            editedRole.setFreeWork(freeGraphicCheckBox.isSelected());
+            editedRole.setCompany(companyListView.getSelectionModel().getSelectedItem());
+            RoleService.updateRole(editedRole);
+            updateTables();
+        }
+    }
+
+    public void deleteRoleClicked() {
+        Role role = roleTable.getSelectionModel().getSelectedItem();
+        if (role != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete role");
+            alert.setHeaderText("Do you really want to delete role?");
+            alert.setContentText(role.getTitle());
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                RoleService.deleteRole(role);
+                updateTables();
+            }
+        }
+    }
+
     // Employee controls
     public void newEmployeeClicked() {
-        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
         Employee editedEmployee = getEditedEmployee(null);
         if (editedEmployee == null) return;
         EmployeeService.createEmployee(editedEmployee);
@@ -213,7 +281,7 @@ public class MainWindowController {
         }
     }
 
-    private Employee getEditedEmployee(Employee employee) { // todo find nullptr
+    private Employee getEditedEmployee(Employee employee) {
         Employee editedEmployee = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/employeeEdit.fxml"));
@@ -232,27 +300,5 @@ public class MainWindowController {
             displayError(e.toString());
         }
         return editedEmployee;
-    }
-
-    // Role controls
-    public void newRoleClicked() { // todo role crud
-    }
-
-    public void editRoleClicked() {
-    }
-
-    public void deleteRoleClicked() {
-        Role role = roleTable.getSelectionModel().getSelectedItem();
-        if (role != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete role");
-            alert.setHeaderText("Do you really want to delete role?");
-            alert.setContentText(role.getTitle());
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                RoleService.deleteRole(role);
-                updateTables();
-            }
-        }
     }
 }

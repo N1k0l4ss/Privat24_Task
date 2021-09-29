@@ -60,4 +60,7 @@ public class Role {
     public void setEmployees(Collection<Employee> employees) {
         this.employees = employees;
     }
+
+    @Override
+    public String toString(){ return title; }
 }

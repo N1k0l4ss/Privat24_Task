@@ -91,4 +91,7 @@ public class Department {
     public String getWorkTimeString() {
         if (startTime == null) return "";
         return startTime.toString(); }
+
+    @Override
+    public String toString(){ return title; }
 }

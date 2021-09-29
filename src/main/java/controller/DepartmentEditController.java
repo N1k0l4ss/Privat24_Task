@@ -30,23 +30,8 @@ public class DepartmentEditController {
 
     public void initialize(){
         workModes = SingleTone.getSingleTone().getEm().createQuery("Select p from Preference p").getResultList(); // Get available preferences
-        // Set spinner limits
-        SpinnerValueFactory<Integer> minutesValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
-        SpinnerValueFactory<Integer> hoursValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 14);
-        minutesSpinner.setValueFactory(minutesValueFactory);
-        hourSpinner.setValueFactory(hoursValueFactory);
         // Disable time fields by selected work mode
-        workModeBox.getSelectionModel().selectedItemProperty().addListener(x -> {
-            Preference workMode = (Preference) workModeBox.getSelectionModel().getSelectedItem();
-            hourSpinner.setDisable(false);
-            minutesSpinner.setDisable(false);
-            hourSpinner.getValueFactory().setValue(9);
-            minutesSpinner.getValueFactory().setValue(0);
-            if (workMode.getId() != 1) {
-                hourSpinner.setDisable(true);
-                minutesSpinner.setDisable(true);
-            }
-        });
+        preferenceListener(workModeBox, hourSpinner, minutesSpinner);
         // Disable field, that doesnt belong to free graphic
         freeWorkToggleGroup.selectedToggleProperty().addListener(x-> {
             if (radioTrue.isSelected()) {
@@ -57,6 +42,26 @@ public class DepartmentEditController {
                 workModeBox.setDisable(false);
                 minutesSpinner.setDisable(false);
                 hourSpinner.setDisable(false);
+            }
+        });
+    }
+
+    static void preferenceListener(ChoiceBox workModeBox, Spinner hourSpinner, Spinner minutesSpinner) {
+        // Set spinner limits
+        SpinnerValueFactory<Integer> minutesValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        SpinnerValueFactory<Integer> hoursValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 14);
+        minutesSpinner.setValueFactory(minutesValueFactory);
+        hourSpinner.setValueFactory(hoursValueFactory);
+        //
+        workModeBox.getSelectionModel().selectedItemProperty().addListener(x -> {
+            Preference workMode = (Preference) workModeBox.getSelectionModel().getSelectedItem();
+            hourSpinner.setDisable(false);
+            minutesSpinner.setDisable(false);
+            hourSpinner.getValueFactory().setValue(9);
+            minutesSpinner.getValueFactory().setValue(0);
+            if (workMode.getId() != 1) {
+                hourSpinner.setDisable(true);
+                minutesSpinner.setDisable(true);
             }
         });
     }

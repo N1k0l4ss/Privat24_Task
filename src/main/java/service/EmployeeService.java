@@ -1,6 +1,5 @@
 package service;
 
-import model.Department;
 import model.Employee;
 import singleTone.SingleTone;
 
@@ -24,10 +23,12 @@ public class EmployeeService {
     public static void updateEmployee(Employee editedEmployee){
         EntityManager em = SingleTone.getSingleTone().getEm();
         em.getTransaction().begin();
-
         Employee employee = em.find(Employee.class, editedEmployee.getId());
-        // todo setters
-
+        employee.setPreference(editedEmployee.getPreference());
+        employee.setRole(editedEmployee.getRole());
+        employee.setStartTime(editedEmployee.getStartTime());
+        employee.setName(editedEmployee.getName());
+        employee.setDepartament(employee.getDepartament());
         em.getTransaction().commit();
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="254.0" prefWidth="508.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EmployeeEditController">
+<AnchorPane prefHeight="254.0" prefWidth="508.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EmployeeEditController">
     <children>
         <TextField fx:id="nameField" layoutX="189.0" layoutY="119.0" prefHeight="26.0" prefWidth="305.0" />
         <Spinner fx:id="hourSpinner" layoutX="15.0" layoutY="144.0" prefHeight="25.0" prefWidth="69.0" />
@@ -35,7 +35,7 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <ChoiceBox fx:id="workModeBox" layoutX="14.0" layoutY="39.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="preferenceBox" layoutX="14.0" layoutY="39.0" prefWidth="150.0" />
         <Separator layoutX="-42.0" layoutY="73.0" prefWidth="550.0" />
         <Label layoutX="14.0" layoutY="14.0" text="Preference">
             <font>
