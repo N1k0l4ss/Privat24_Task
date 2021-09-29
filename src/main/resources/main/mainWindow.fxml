@@ -61,9 +61,9 @@
                 <bottom>
                     <AnchorPane prefHeight="45.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                         <children>
-                            <Button layoutX="926.0" layoutY="10.0" mnemonicParsing="false" text="New role" />
-                            <Button layoutX="772.0" layoutY="10.0" mnemonicParsing="false" text="Delete role" />
-                            <Button layoutX="856.0" layoutY="10.0" mnemonicParsing="false" text="Edit role" />
+                            <Button layoutX="926.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#newRoleClicked" text="New role" />
+                            <Button layoutX="772.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#deleteRoleClicked" text="Delete role" />
+                            <Button layoutX="856.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#editRoleClicked" text="Edit role" />
                         <Button layoutX="123.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#newCompanyClicked" text="New company" />
                         <Button layoutX="554.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#newDepartmentClicked" text="New department" />
                         <Button layoutX="442.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#editDepartmentClicked" text="Edit department" />

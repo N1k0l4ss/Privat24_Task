@@ -9,11 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 import service.CompanyService;
 import service.DepartmentService;
+import service.RoleService;
 import singleTone.SingleTone;
 
 import java.util.Optional;
@@ -177,5 +179,25 @@ public class MainWindowController {
         return editedDepartment;
     }
 
+    // Role controls
+    public void newRoleClicked() {
+    }
 
+    public void editRoleClicked() {
+    }
+
+    public void deleteRoleClicked() {
+        Role role = roleTable.getSelectionModel().getSelectedItem();
+        if (role != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete role");
+            alert.setHeaderText("Do you really want to delete role?");
+            alert.setContentText(role.getTitle());
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                RoleService.deleteRole(role);
+                updateTables();
+            }
+        }
+    }
 }
