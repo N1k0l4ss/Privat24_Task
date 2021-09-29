@@ -15,13 +15,13 @@ import java.util.List;
  * 3. Work at home - coefficient 0.1
  * */
 public class ProfitCalculator
-{ // todo salaryS
+{
     private final LocalTime defaultTime = LocalTime.of(9,00);
     private final double defaultHourSalary = 10;
     private Company company;
     private List preferences;
     private Collection<Employee> employees;
-
+    private DecimalFormat df = new DecimalFormat("###.##");
 
     public ProfitCalculator(Company company) {
         this.company = company;
@@ -29,22 +29,40 @@ public class ProfitCalculator
         if (this.company != null){
             employees = company.getEmployees();
         }
-        //todo temporary
-        calcProfit();
     }
 
-    private void calcProfit(){
-        if (company == null) return;
-        System.out.println(company);
-        double hourCounter = 0;
-        for (Employee employee : employees) {
-            hourCounter += employeeHourCalc(employee);
-        }
-        DecimalFormat df = new DecimalFormat("###.###");
-        String format = df.format(hourCounter);
-        System.out.println("Hour profit = " + format + " employee/hours");
-        System.out.println();
+    public String getCompanyProfit(){
+        double sum = 0;
+        for (Employee employee : employees)
+            sum += employeeHourCalc(employee);
+        return company.getTitle() + " profit: " + df.format(sum) + " hours/employee\n" + df.format(defaultHourSalary*sum) + "$\n\n";
     }
+
+    public String getEmployeesProfit(){
+        StringBuilder employeesProfit = new StringBuilder();
+        for (Employee employee : employees) {
+            double sum = employeeHourCalc(employee);
+            employeesProfit.append(employee.getName() + ": " + df.format(sum) + " hours/employee\n" + df.format(defaultHourSalary*sum) + "$\n");
+        }
+        employeesProfit.append("\n");
+        return employeesProfit.toString();
+    }
+
+    public String getDepartmentsProfit(){
+        StringBuilder departmentsProfit = new StringBuilder();
+        Collection<Department> departments = company.getDepartaments();
+        for (Department department : departments) {
+            Collection<Employee> employees = department.getEmployees();
+            double sum = 0;
+            for (Employee employee : employees) {
+                sum += employeeHourCalc(employee);
+            }
+            departmentsProfit.append(department.getTitle() + ": " + df.format(sum) + " hours/employee\n" + df.format(defaultHourSalary*sum) + "$\n");
+        }
+        departmentsProfit.append("\n");
+        return departmentsProfit.toString();
+    }
+
 
     private double employeeHourCalc(Employee employee) {
         Department employeeDepartment = employee.getDepartament();

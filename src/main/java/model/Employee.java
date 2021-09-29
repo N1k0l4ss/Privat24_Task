@@ -91,7 +91,7 @@ public class Employee {
         this.company = company;
     }
 
-    public String getTimeString() { if (startTime == null) return ""; return startTime.toString(); }
+    public String getTimeString() { if (startTime == null) return ""; return startTime.toString() + "-" + startTime.plusHours(9).toString(); }
 
     @Override
     public boolean equals(Object o) {

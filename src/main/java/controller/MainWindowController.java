@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -72,6 +71,7 @@ public class MainWindowController {
                     employeeTable.setItems(FXCollections.observableArrayList(newV.getEmployees()));
                 }
         );
+        displayHelp();
     }
 
     private void updateTables() {
@@ -92,15 +92,43 @@ public class MainWindowController {
         alert.showAndWait();
     }
 
+    public void displayInfo(String contentText, String title, String textHeader){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(textHeader);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    private void displayHelp(){
+        String info = "The program is written by Nikita Bielonozhko.\n" +
+                "For update tables, please, press F5\n" +
+                "For look profit, firstly choose the company then press F4\n" +
+                "For look help again, please press F1";
+        displayInfo(info, "Help", "About program");
+    }
+
     public void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()){
+            case F1:
+                displayHelp();
+                break;
+            case F4:
+                displayProfit();
+                break;
             case F5:
                 updateTables();
                 break;
-            case F4:
-                new ProfitCalculator(companyListView.getSelectionModel().getSelectedItem());
-                break;
         }
+    }
+
+    private void displayProfit() {
+        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
+        ProfitCalculator pc = new ProfitCalculator(companyListView.getSelectionModel().getSelectedItem());
+        String result = "\tCompany profit\n" + pc.getCompanyProfit()
+                + "\tDepartments profit\n" + pc.getDepartmentsProfit()
+                + "\tEmployees profit\n" + pc.getEmployeesProfit();
+        displayInfo(result, "Profit of company", null);
     }
 
     // Company controls

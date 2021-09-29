@@ -90,7 +90,7 @@ public class Department {
 
     public String getWorkTimeString() {
         if (startTime == null) return "";
-        return startTime.toString(); }
+        return startTime.toString() + "-" + startTime.plusHours(9).toString(); }
 
     @Override
     public String toString(){ return title; }

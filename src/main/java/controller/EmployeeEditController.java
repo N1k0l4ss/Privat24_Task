@@ -25,7 +25,7 @@ public class EmployeeEditController {
     private List<Company> companies;
     private List workModes;
     private Optional<Integer> employeeId = Optional.empty();
-// todo add time range fro two tables
+
     public void initialize(){
         workModes = SingleTone.getSingleTone().getEm().createQuery("Select p from Preference p").getResultList();
         // Set spinner limits
