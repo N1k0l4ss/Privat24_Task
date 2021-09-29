@@ -200,4 +200,25 @@ public class MainWindowController {
             }
         }
     }
+
+    private Employee getEditedEmployee(Employee employee) {
+        Employee editedEmplayee = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/employeeEdit.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Employee");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root1));
+            EmployeeEditController controller = fxmlLoader.getController();
+            controller.init(companyListView.getItems());
+            controller.sendEmployee(employee);
+            stage.setResizable(false);
+            stage.showAndWait();
+            editedEmplayee = controller.getEditedEmployee();
+        } catch (Exception e) {
+            displayError(e.toString());
+        }
+        return editedEmplayee;
+    }
 }

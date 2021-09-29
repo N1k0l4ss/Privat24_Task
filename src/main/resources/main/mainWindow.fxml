@@ -21,7 +21,7 @@
                     <columns>
                       <TableColumn fx:id="departmentTitle" prefWidth="123.0" text="Title" />
                       <TableColumn fx:id="departmentFreeWork" minWidth="0.0" prefWidth="89.0" text="Free Graphic" />
-                        <TableColumn fx:id="departmentWorkTime" prefWidth="97.0" text="Work time" />
+                        <TableColumn fx:id="departmentWorkTime" prefWidth="95.0" text="Work time" />
                         <TableColumn fx:id="departmentWorkMode" prefWidth="139.0" text="Work Mode" />
                     </columns>
                   </TableView>
@@ -85,7 +85,7 @@
                       <TableColumn fx:id="employeePreference" minWidth="4.0" prefWidth="198.0" text="Preference" />
                         <TableColumn fx:id="employeeDepartment" prefWidth="180.0" text="Department" />
                         <TableColumn fx:id="employeeTime" prefWidth="73.0" text="Time pref" />
-                        <TableColumn fx:id="employeeRole" prefWidth="237.0" text="Role" />
+                        <TableColumn fx:id="employeeRole" prefWidth="233.0" text="Role" />
                     </columns>
                   </TableView>
                </center>
