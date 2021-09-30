@@ -57,7 +57,7 @@ public class DepartmentEditController {
             Preference workMode = (Preference) workModeBox.getSelectionModel().getSelectedItem();
             hourSpinner.setDisable(false);
             minutesSpinner.setDisable(false);
-            hourSpinner.getValueFactory().setValue(9);
+            hourSpinner.getValueFactory().setValue(8);
             minutesSpinner.getValueFactory().setValue(0);
             if (workMode.getId() != 1) {
                 hourSpinner.setDisable(true);
@@ -87,7 +87,7 @@ public class DepartmentEditController {
             hourSpinner.getValueFactory().setValue(department.getStartTime().getHour());
             minutesSpinner.getValueFactory().setValue(department.getStartTime().getMinute());
         } else {
-                hourSpinner.getValueFactory().setValue(9);
+                hourSpinner.getValueFactory().setValue(8);
                 minutesSpinner.getValueFactory().setValue(0);
         }
         //

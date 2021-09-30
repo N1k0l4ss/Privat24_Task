@@ -17,7 +17,7 @@ import java.util.List;
  * */
 public class ProfitCalculator
 {
-    private final LocalTime defaultTime = LocalTime.of(9,00);
+    private final LocalTime defaultTime = LocalTime.of(8,00);
     private final double defaultHourSalary = 10;
     private Company company;
     private List preferences;
