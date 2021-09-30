@@ -5,6 +5,7 @@ import singleTone.SingleTone;
 
 import java.text.DecimalFormat;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ProfitCalculator
     private List preferences;
     private Collection<Employee> employees;
     private DecimalFormat df = new DecimalFormat("###.##");
+    private List<Profit> profitList = new ArrayList<>();
 
     public ProfitCalculator(Company company) {
         this.company = company;
@@ -31,25 +33,17 @@ public class ProfitCalculator
         }
     }
 
-    public String getCompanyProfit(){
+    private void initCompanyProfit(){
         double sum = 0;
         for (Employee employee : employees)
             sum += employeeHourCalc(employee);
-        return company.getTitle() + " profit: " + df.format(sum) + " hours/employee\n" + df.format(defaultHourSalary*sum) + "$\n\n";
+        String companyName = "Company: " + company.getTitle();
+        String hourProfit = df.format(sum);
+        String dollarsProfit = df.format(defaultHourSalary * sum);
+        profitList.add(new Profit(companyName, hourProfit, dollarsProfit));
     }
 
-    public String getEmployeesProfit(){
-        StringBuilder employeesProfit = new StringBuilder();
-        for (Employee employee : employees) {
-            double sum = employeeHourCalc(employee);
-            employeesProfit.append(employee.getName() + ": " + df.format(sum) + " hours/employee\n" + df.format(defaultHourSalary*sum) + "$\n");
-        }
-        employeesProfit.append("\n");
-        return employeesProfit.toString();
-    }
-
-    public String getDepartmentsProfit(){
-        StringBuilder departmentsProfit = new StringBuilder();
+    private void initDepartmentsProfit(){
         Collection<Department> departments = company.getDepartaments();
         for (Department department : departments) {
             Collection<Employee> employees = department.getEmployees();
@@ -57,12 +51,23 @@ public class ProfitCalculator
             for (Employee employee : employees) {
                 sum += employeeHourCalc(employee);
             }
-            departmentsProfit.append(department.getTitle() + ": " + df.format(sum) + " hours/employee\n" + df.format(defaultHourSalary*sum) + "$\n");
+            String departmentTitle = "Department: " + department.getTitle();
+            String hourProfit = df.format(sum);
+            String dollarsProfit = df.format(defaultHourSalary * sum);
+            profitList.add(new Profit(departmentTitle, hourProfit, dollarsProfit));
         }
-        departmentsProfit.append("\n");
-        return departmentsProfit.toString();
     }
 
+    private void initEmployeesProfit(){
+        StringBuilder employeesProfit = new StringBuilder();
+        for (Employee employee : employees) {
+            double sum = employeeHourCalc(employee);
+            String employeeName = "Employee: " + employee.getName();
+            String hourProfit = df.format(sum);
+            String dollarsProfit = df.format(defaultHourSalary * sum);
+            profitList.add(new Profit(employeeName, hourProfit, dollarsProfit));
+        }
+    }
 
     private double employeeHourCalc(Employee employee) {
         Department employeeDepartment = employee.getDepartament();
@@ -93,5 +98,12 @@ public class ProfitCalculator
          double timeAmins = timeA.getMinute() + timeA.getHour() * 60;
          double timeBmins = timeB.getMinute() + timeB.getHour() * 60;
          return Math.abs(timeAmins - timeBmins);
+    }
+
+    public List<Profit> getProfitList() {
+        initCompanyProfit();
+        initDepartmentsProfit();
+        initEmployeesProfit();
+        return profitList;
     }
 }

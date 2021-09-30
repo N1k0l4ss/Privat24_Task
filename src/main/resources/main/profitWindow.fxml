@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfitWindowController">
+   <center>
+      <TableView fx:id="profitTable" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="infoColumn" editable="false" prefWidth="396.0" sortable="false" text="Info" />
+          <TableColumn fx:id="hourColumn" editable="false" minWidth="4.0" prefWidth="109.0" sortable="false" text="hour/employee" />
+            <TableColumn fx:id="moneyColumn" editable="false" minWidth="6.0" prefWidth="92.0" sortable="false" text="Money profit" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

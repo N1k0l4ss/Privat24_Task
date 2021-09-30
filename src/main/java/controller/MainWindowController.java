@@ -11,7 +11,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import logic.ProfitCalculator;
 import model.*;
 import service.CompanyService;
 import service.DepartmentService;
@@ -123,12 +122,24 @@ public class MainWindowController {
     }
 
     private void displayProfit() {
-        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
-        ProfitCalculator pc = new ProfitCalculator(companyListView.getSelectionModel().getSelectedItem());
-        String result = "\tCompany profit\n" + pc.getCompanyProfit()
-                + "\tDepartments profit\n" + pc.getDepartmentsProfit()
-                + "\tEmployees profit\n" + pc.getEmployeesProfit();
-        displayInfo(result, "Profit of company", null);
+        if (companyListView.getSelectionModel().getSelectedItem() == null) {
+            displayError("Select company to look at profit");
+            return;
+        }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/profitWindow.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Company profit");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root1));
+            ProfitWindowController controller = fxmlLoader.getController();
+            controller.init(companyListView.getSelectionModel().getSelectedItem());
+            stage.setResizable(false);
+            stage.showAndWait();
+        } catch (Exception e) {
+            displayError(e.toString());
+        }
     }
 
     // Company controls
@@ -158,7 +169,7 @@ public class MainWindowController {
                 CompanyService.deleteCompany(company);
                 updateTables();
             }
-        }
+        } else displayError("Select company to delete");
     }
 
     // Department controls
@@ -171,7 +182,10 @@ public class MainWindowController {
 
     public void editDepartmentClicked() {
         Department department = departmentTable.getSelectionModel().getSelectedItem();
-        if (department == null) return;
+        if (department == null) {
+            displayError("Select department to edit");
+            return;
+        }
         Department editedDepartment = getEditedDepartment(department);
         if (editedDepartment == null) return;
         DepartmentService.updateDepartment(editedDepartment);
@@ -190,7 +204,7 @@ public class MainWindowController {
                 DepartmentService.deleteDepartment(department);
                 updateTables();
             }
-        }
+        } else displayError("Select department to delete");
     }
 
     private Department getEditedDepartment(Department department) {
@@ -216,7 +230,10 @@ public class MainWindowController {
 
     // Role controls
     public void newRoleClicked() {
-        if (companyListView.getSelectionModel().getSelectedItem() == null) return;
+        if (companyListView.getSelectionModel().getSelectedItem() == null) {
+            displayError("Select company to insert role");
+            return;
+        }
         TextField newRoleField = new TextField();
         CheckBox freeGraphicCheckBox = new CheckBox();
         boolean okPressed = editRoleDialog(newRoleField, freeGraphicCheckBox);
@@ -252,7 +269,10 @@ public class MainWindowController {
 
     public void editRoleClicked() {
         Role selectedRole = roleTable.getSelectionModel().getSelectedItem();
-        if (selectedRole == null) return;
+        if (selectedRole == null) {
+            displayError("Select role to edit");
+            return;
+        }
         // Init field
         TextField newRoleField = new TextField(selectedRole.getTitle());
         CheckBox freeGraphicCheckBox = new CheckBox();
@@ -281,7 +301,7 @@ public class MainWindowController {
                 RoleService.deleteRole(role);
                 updateTables();
             }
-        }
+        } else displayError("Select role to delete");
     }
 
     // Employee controls
@@ -294,7 +314,10 @@ public class MainWindowController {
 
     public void editEmployeeClicked() {
         Employee employee = employeeTable.getSelectionModel().getSelectedItem();
-        if (employee == null) return;
+        if (employee == null) {
+            displayError("Select employee to edit");
+            return;
+        }
         Employee editedEmployee = getEditedEmployee(employee);
         if (editedEmployee == null) return;
         EmployeeService.updateEmployee(editedEmployee);
@@ -313,7 +336,7 @@ public class MainWindowController {
                 EmployeeService.deleteEmployee(employee);
                 updateTables();
             }
-        }
+        } else displayError("Select employee to delete");
     }
 
     private Employee getEditedEmployee(Employee employee) {
