@@ -102,8 +102,8 @@ public class MainWindowController {
     private void displayHelp(){
         String info = "The program is written by Nikita Bielonozhko. \n" +
                 "To update tables, please, press F5. \n" +
-                "To review profit, firstly choose the company, then press F4. \n" +
-                "To review help again, please press F1";
+                "To reveal profit, firstly, choose the company, then press F4. \n" +
+                "To reveal help again, please, press F1";
         displayInfo(info, "Help", "About program");
     }
 
