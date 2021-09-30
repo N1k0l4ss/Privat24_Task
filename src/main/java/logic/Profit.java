@@ -28,7 +28,7 @@ public class Profit {
     }
 
     public String getDollarProfit() {
-        return dollarProfit;
+        return "$ " + dollarProfit;
     }
 
     public void setDollarProfit(String dollarProfit) {
