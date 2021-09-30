@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 30 2021 г., 10:59
+-- Время создания: Сен 30 2021 г., 11:40
 -- Версия сервера: 10.3.22-MariaDB
 -- Версия PHP: 7.1.33
 
@@ -61,7 +61,7 @@ CREATE TABLE `department` (
 
 INSERT INTO `department` (`ID`, `FREEWORK`, `STARTTIME`, `TITLE`, `COMPANY_ID`, `WORKMODE_ID`) VALUES
 (194, 0, '08:52:00', 'Industrial', 92, 1),
-(195, 0, '09:00:00', 'Beauty', 92, 2),
+(195, 0, '08:00:00', 'Beauty', 92, 2),
 (196, 0, '10:33:00', 'Electronics', 93, 1),
 (197, 1, NULL, 'Movies', 93, NULL);
 
@@ -86,16 +86,16 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`ID`, `NAME`, `STARTTIME`, `COMPANY_ID`, `DEPARTMENT_ID`, `ROLE_ID`, `PREFERENCE_ID`) VALUES
-(9040, 'George Altenwerth', '09:00:00', 92, 194, 571, 2),
+(9040, 'George Altenwerth', '08:00:00', 92, 194, 571, 2),
 (9041, 'Carlotta Jacobi', '01:36:00', 92, 194, 570, 1),
 (9042, 'Rosalind Funk', '14:41:00', 92, 194, 570, 1),
-(9043, 'Jason Kovacek', '09:00:00', 92, 195, 572, 2),
+(9043, 'Jason Kovacek', '08:00:00', 92, 195, 572, 2),
 (9044, 'Abdiel Hettinger', '12:55:00', 92, 195, 570, 1),
 (9045, 'Dan Pollich', '01:59:00', 93, 197, 573, 1),
-(9046, 'Dorthy Schaefer', '09:00:00', 93, 196, 575, 2),
-(9047, 'Kennedy Boehm', '09:00:00', 93, 197, 573, 2),
+(9046, 'Dorthy Schaefer', '08:00:00', 93, 196, 575, 2),
+(9047, 'Kennedy Boehm', '08:00:00', 93, 197, 573, 2),
 (9048, 'Brad Lehner', NULL, 93, 197, 575, 3),
-(9049, 'Jamey Kuhic', '09:00:00', 93, 197, 575, 2);
+(9049, 'Jamey Kuhic', '08:00:00', 93, 197, 575, 2);
 
 -- --------------------------------------------------------
 
