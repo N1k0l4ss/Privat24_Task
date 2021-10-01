@@ -2,7 +2,7 @@ package salary;
 
 import java.util.Objects;
 
-public class PercentSalary {
+public class PercentSalary extends Salary {
     private double sellsMoney;
     private double percent;
 
