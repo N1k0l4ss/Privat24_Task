@@ -127,7 +127,7 @@ public class MainWindowController {
             return;
         }
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/profitWindow.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/profitWindow.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Company profit");
@@ -210,7 +210,7 @@ public class MainWindowController {
     private Department getEditedDepartment(Department department) {
         Department editedDepartment = null;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/departmentEdit.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/departmentEdit.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Department");
@@ -342,7 +342,7 @@ public class MainWindowController {
     private Employee getEditedEmployee(Employee employee) {
         Employee editedEmployee = null;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../main/employeeEdit.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/employeeEdit.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Employee");

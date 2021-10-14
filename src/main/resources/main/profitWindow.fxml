@@ -7,7 +7,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfitWindowController">
    <center>
-      <TableView fx:id="profitTable" BorderPane.alignment="CENTER">
+      <TableView onKeyPressed="#onKeyPressed" fx:id="profitTable" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="infoColumn" editable="false" prefWidth="396.0" sortable="false" text="Info" />
           <TableColumn fx:id="hourColumn" editable="false" minWidth="4.0" prefWidth="109.0" sortable="false" text="hour/employee" />

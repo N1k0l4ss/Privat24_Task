@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import logic.Profit;
 import logic.ProfitCalculator;
 import model.Company;
@@ -27,5 +29,18 @@ public class ProfitWindowController {
         ProfitCalculator pc = new ProfitCalculator(company);
         List<Profit> profitList = pc.getProfitList();
         profitTable.setItems(FXCollections.observableArrayList(profitList));
+    }
+
+    public void onKeyPressed(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()){
+            case ESCAPE:
+                closeStage();
+                break;
+        }
+    }
+
+    private void closeStage(){
+        Stage stage = (Stage) profitTable.getScene().getWindow();
+        stage.close();
     }
 }
